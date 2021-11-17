@@ -20,9 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BlocProvider(
-        create: (context) => FetchDataCubit(),
-        child: HomeScreen(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<FetchDataCubit>(
+              create: (context)=>FetchDataCubit(),
+          )
+        ],
+          child: HomeScreen()
       ),
     );
   }

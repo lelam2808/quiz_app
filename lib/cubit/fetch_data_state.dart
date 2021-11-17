@@ -6,7 +6,8 @@ class FetchDataState {}
 class FetchDataInitial extends FetchDataState {}
 class FetchDataLoaded extends FetchDataState {
   List<Results> listResult;
-  FetchDataLoaded(this.listResult);
+  int score;
+  FetchDataLoaded(this.listResult, this.score);
 }
 class FetchDataLoadedFailed extends FetchDataState {
   String message;

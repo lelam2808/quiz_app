@@ -10,12 +10,13 @@ class FetchDataCubit extends Cubit<FetchDataState> {
   Future getResult() async{
     try{
       final List<Results> listResult=await HttpService.getQuizz();
+      final int score=0;
       if(listResult==null){
         emit(FetchDataLoadedFailed("error"));
       }
       else{
         // emit(MovieInitial());
-        emit(FetchDataLoaded(listResult));
+        emit(FetchDataLoaded(listResult, score));
       }
     }on Exception catch (e){
       print(e);

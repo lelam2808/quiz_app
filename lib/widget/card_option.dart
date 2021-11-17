@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz_app/cubit/fetch_data_cubit.dart';
 import 'package:quiz_app/model/quiz_model.dart';
 import 'package:quiz_app/widget/option.dart';
 
-class CardOption extends StatelessWidget {
+class CardOption extends StatefulWidget {
   const CardOption({
-    Key? key, required this.question,
+    Key? key, 
+    required this.question, 
+    required this.indexQuestion,
   }) : super(key: key);
   final Results question;
+  final int indexQuestion;
+  
+  @override
+  State<CardOption> createState() => _CardOptionState();
+}
+
+class _CardOptionState extends State<CardOption> {
+
+  bool isPress=false;
+  Color trueAnswer=Colors.green;
+  // Color wrongAnswer=Colors.red;
+  Color colorBtn= Colors.grey;
+  int score = 0;
+  List<String>? newList;
+  @override
+  void initState() {
+    newList= widget.question.incorrectAnswers;
+    newList!.insert(widget.question.incorrectAnswers.length, widget.question.correctAnswer);
+    setState(() {
+      isPress=false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,16 +42,95 @@ class CardOption extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
+      child: ListView(
+        scrollDirection: Axis.vertical,
         children: [
-          Text(question.question.toString(),style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),),
-          Option(),
-          Option(),
-          Option(),
-          Option()
-        ],
+          BlocBuilder<FetchDataCubit , FetchDataState>(
+          builder: (context, state) {
+            if(state is FetchDataLoaded){
+              return Column(
+                children: [
+                  Text("Câu hỏi thứ ${widget.indexQuestion+1}/10", style: TextStyle(fontSize: 20),),
+                  SizedBox(height: 20,),
+                  Text(widget.question.question.toString(),style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),),
+                  ...List.generate(newList!.length, (index) =>
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            isPress=true;
+                          });
+                          print("click");
+                          if(newList![index].contains(widget.question.correctAnswer)){
+                            print("dap an dung");
+                            state.score+=1;
+                          }
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(top:20),
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width:2,
+                                  color:isPress ?
+                                  newList![index].contains(widget.question.correctAnswer) ?
+                                  trueAnswer:
+                                  colorBtn :
+                                  colorBtn
+                              ),
+                              borderRadius: BorderRadius.circular(10)
+
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  width: 250,
+                                  child: Text("${index+1}. ${newList![index]}",maxLines: 2, overflow:TextOverflow.visible, style: TextStyle(color: Colors.black),)
+                              ),
+                              Container(
+                                height: 15,
+                                width: 15,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: Colors.grey)
+                                ),
+                              )
+
+                            ],
+                          ),
+                        ),
+                      )
+                    // Option(
+                    //   text: newList![index],
+                    //   index: index,
+                    //   colorBtn: colorBtn,
+                    //   press: (){
+                    //     print("click");
+                    //     if(newList![index].contains(widget.question.correctAnswer)){
+                    //       print("dap an dung");
+                    //       setState(() {
+                    //         colorBtn=trueAnswer;
+                    //       });
+                    //     }
+                    //     else{
+                    //       print("dap an sai");
+                    //         colorBtn=wrongAnswer;
+                    //     }
+                    // })
+                  ),
+                ],
+              );
+            }
+            else{
+              return Container() ;
+            }
+          },
+        ),
+      ]
       ),
     );
   }
+
+
 }
 
