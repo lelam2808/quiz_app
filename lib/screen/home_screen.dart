@@ -1,11 +1,9 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:provider/src/provider.dart';
-import 'package:quiz_app/controller/quizz_controller.dart';
 import 'package:quiz_app/cubit/fetch_data_cubit.dart';
-import 'package:quiz_app/model/quiz_model.dart';
 import 'package:quiz_app/screen/result_screen.dart';
 import 'package:quiz_app/widget/card_option.dart';
 
@@ -18,15 +16,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String textNextPage="Next Question";
+  int couter=0;
+  late Timer timer;
+  void startTime(){
+    timer=Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        couter++;
+      });
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<FetchDataCubit>().getResult();
+    startTime();
   }
   @override
   Widget build(BuildContext context) {
-    // QuizzController quizzController=Get.put(QuizzController());
     PageController pageController= PageController(
       initialPage: 0
     );
@@ -45,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 150,),
+                  SizedBox(height: 100,),
                   SizedBox(height: 20,),
                   Expanded(
                     child:PageView.builder(
@@ -72,8 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         print("diem hien tai: "+state.score.toString());
                         pageController.nextPage(duration: Duration(milliseconds: 10), curve: Curves.bounceIn);
                         if(pageController.page!+1==state.listResult.length){
+                          timer.cancel();
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=>ResultScreen(score: state.score,))
+                              MaterialPageRoute(builder: (context)=>ResultScreen(score: state.score,timeSeconds: couter,))
                           );
                         }
                       },
@@ -103,6 +111,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    timer.cancel();
+    super.dispose();
   }
 }
 

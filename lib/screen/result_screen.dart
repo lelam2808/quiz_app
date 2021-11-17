@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/screen/home_screen.dart';
 
 class ResultScreen extends StatefulWidget {
-  const ResultScreen({Key? key, required this.score}) : super(key: key);
+  const ResultScreen({Key? key,
+    required this.score,
+    required this.timeSeconds}) : super(key: key);
   final int score;
+  final int timeSeconds;
   @override
   _ResultScreenState createState() => _ResultScreenState();
 }
@@ -56,7 +59,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       SizedBox(height: 10,),
                       Text("${text2}", style: TextStyle(fontSize: 20,),),
                       SizedBox(height: 10,),
-                      Text("${widget.score}/10 correct answers in 15 seconds", style: TextStyle(fontSize: 18,)),
+                      Text("${widget.score}/10 correct answers in ${widget.timeSeconds} seconds", style: TextStyle(fontSize: 18,)),
                       SizedBox(height: 20,),
                       GestureDetector(
                         onTap: (){
