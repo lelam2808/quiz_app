@@ -22,36 +22,35 @@ class _OptionState extends State<Option> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         // print("click");
         widget.press;
       },
       child: Container(
-        margin: EdgeInsets.only(top:20),
+        margin: EdgeInsets.only(top: 20),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: widget.colorBtn,
-            border: Border.all(color:widget.colorBtn),
-            borderRadius: BorderRadius.circular(10)
-
-        ),
+            color: widget.colorBtn,
+            border: Border.all(color: widget.colorBtn),
+            borderRadius: BorderRadius.circular(10)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 250,
-                child: Text("${widget.index+1}. ${widget.text}",maxLines: 2, overflow:TextOverflow.visible, style: TextStyle(color: Colors.black),)
-            ),
+                width: 250,
+                child: Text(
+                  "${widget.index + 1}. ${widget.text}",
+                  maxLines: 2,
+                  overflow: TextOverflow.visible,
+                  style: TextStyle(color: Colors.black),
+                )),
             Container(
               height: 20,
               width: 20,
               decoration: BoxDecoration(
-
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.grey)
-              ),
+                  border: Border.all(color: Colors.grey)),
             )
-
           ],
         ),
       ),

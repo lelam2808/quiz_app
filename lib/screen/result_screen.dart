@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/screen/home_screen.dart';
+import 'package:quiz_app/screen/welcome_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({Key? key,
@@ -63,7 +64,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       SizedBox(height: 20,),
                       GestureDetector(
                         onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>HomeScreen()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>WelcomeScreen()));
                         },
                         child: Container(
                           width: 100,
@@ -81,7 +82,6 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
               ),
             )
-
           ],
         ),
       ),

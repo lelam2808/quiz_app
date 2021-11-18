@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:quiz_app/cubit/fetch_data_cubit.dart';
 import 'package:quiz_app/screen/home_screen.dart';
 import 'package:quiz_app/screen/welcome_screen.dart';
 
@@ -19,14 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<FetchDataCubit>(
-              create: (_)=>FetchDataCubit(),
-          ),
-        ],
-          child: HomeScreen()
-      ),
+      home: WelcomeScreen(),
     );
   }
 }

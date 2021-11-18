@@ -1,15 +1,12 @@
 
-
 import 'dart:convert';
 
-List<Quizz> getQuizzFromJson(String str) => List<Quizz>.from(json.decode(str).map((x) => Quizz.fromJson(x)));
-class Quizz {
+class Quiz {
   late int responseCode;
   late List<Results> results;
+  Quiz({required this.responseCode, required this.results});
 
-  Quizz({required this.responseCode, required this.results});
-
-  Quizz.fromJson(Map<String, dynamic> json) {
+  Quiz.fromJson(Map<String, dynamic> json) {
     responseCode = json['response_code'];
     if (json['results'] != null) {
       results = <Results>[];
