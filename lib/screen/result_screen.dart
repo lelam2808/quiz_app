@@ -12,16 +12,16 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  String text1="Congratulation !!!";
-  String text2="You are amazing !!!";
+  String textHeader="Congratulation !!!";
+  String textContent="You are amazing !!!";
   String urlImg="assets/images/achive.png";
   @override
   void initState() {
     // TODO: implement initState
     if(widget.score < 5){
       setState(() {
-        text1="Completed !!!";
-        text2="Better luck for next time !";
+        textHeader="Completed !!!";
+        textContent="Better luck for next time !";
         urlImg="assets/images/try.jpg";
       });
     }
@@ -55,9 +55,9 @@ class _ResultScreenState extends State<ResultScreen> {
                           child: Image.asset("${urlImg}")
                       ),
                       SizedBox(height: 20,),
-                      Text("${text1}", style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),),
+                      Text("${textHeader}", style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),),
                       SizedBox(height: 10,),
-                      Text("${text2}", style: TextStyle(fontSize: 20,),),
+                      Text("${textContent}", style: TextStyle(fontSize: 20,),),
                       SizedBox(height: 10,),
                       Text("${widget.score}/10 correct answers in ${widget.timeSeconds} seconds", style: TextStyle(fontSize: 18,)),
                       SizedBox(height: 20,),

@@ -16,12 +16,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String textNextPage="Next Question";
-  int couter=0;
+  int countTime=0;
   late Timer timer;
   void startTime(){
     timer=Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        couter++;
+        countTime++;
       });
     });
   }
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(Icons.timer),
-                          Text(" ${couter} seconds")
+                          Text(" ${countTime} seconds")
                         ],
                       ),
                     ),
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         if(pageController.page!+1==state.listResult.length){
                           timer.cancel();
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=>ResultScreen(score: state.score,timeSeconds: couter,))
+                              MaterialPageRoute(builder: (context)=>ResultScreen(score: state.score,timeSeconds: countTime,))
                           );
                         }
                       },
@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: Colors.grey,
+                          color:Colors.red,
                         ),
                         child: Center(
                           child: Text(textNextPage, style: TextStyle(fontSize: 18, color: Colors.white),),
