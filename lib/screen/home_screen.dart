@@ -47,12 +47,33 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: BlocBuilder<FetchDataCubit, FetchDataState>(
+            // bloc: FetchDataCubit(),
           builder: (context, state) {
             if(state is FetchDataLoaded){
               return Column(
+                // crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 100,),
+                  Padding(
+                    padding:EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.05),
+                    child: Container(
+                      width: 120,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.timer),
+                          Text(" ${couter} seconds")
+                        ],
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 20,),
                   Expanded(
                     child:PageView.builder(
@@ -89,8 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.grey,
                         ),
                         child: Center(
                           child: Text(textNextPage, style: TextStyle(fontSize: 18, color: Colors.white),),

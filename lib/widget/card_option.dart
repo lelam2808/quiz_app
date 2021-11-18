@@ -29,6 +29,7 @@ class _CardOptionState extends State<CardOption> {
   void initState() {
     newList= widget.question.incorrectAnswers;
     newList!.insert(widget.question.incorrectAnswers.length, widget.question.correctAnswer);
+    newList!.sort();
     setState(() {
       isPress=false;
     });
@@ -50,9 +51,9 @@ class _CardOptionState extends State<CardOption> {
             if(state is FetchDataLoaded){
               return Column(
                 children: [
-                  Text("Câu hỏi thứ ${widget.indexQuestion+1}/10", style: TextStyle(fontSize: 20),),
+                  Text("Câu hỏi thứ ${widget.indexQuestion+1}/10", style: TextStyle(fontSize: 18),),
                   SizedBox(height: 20,),
-                  Text(widget.question.question.toString(),style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),),
+                  Text(widget.question.question.toString(),style: TextStyle(fontSize: 18, color: Colors.black),),
                   ...List.generate(newList!.length, (index) =>
                       GestureDetector(
                         onTap: (){
@@ -84,15 +85,29 @@ class _CardOptionState extends State<CardOption> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                  width: 250,
+                                  width: 230,
                                   child: Text("${index+1}. ${newList![index]}",maxLines: 2, overflow:TextOverflow.visible, style: TextStyle(color: Colors.black),)
                               ),
                               Container(
-                                height: 15,
-                                width: 15,
+                                height: 20,
+                                width: 20,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(color: Colors.grey)
+                                    border: Border.all(
+                                        width:2,
+                                        color:isPress ?
+                                        newList![index].contains(widget.question.correctAnswer) ?
+                                        Colors.green:
+                                        Colors.red :
+                                        colorBtn
+                                    )
+                                ),
+                                child: Center(
+                                  child: isPress ?
+                                  newList![index].contains(widget.question.correctAnswer)?
+                                      Icon(Icons.check,size: 12,color: Colors.green,):
+                                      Icon(Icons.clear,size: 12, color: Colors.red,)  :
+                                      null
                                 ),
                               )
 
